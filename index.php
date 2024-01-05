@@ -10,25 +10,18 @@
 
 <?php 
 $debugRetazec = "";
-if (isset($_POST["submit"])) {
-    if ($_POST["email"] == null ||
-        $_POST["username"] == null ||
-        $_POST["password"] == null || 
-        $_POST["gender"] == null) 
-    {
-        echo "Nedostatok udajov";
-        print_r($_POST);
+
+    if (empty($_POST["email"]) || empty($_POST["username"]) || empty($_POST["password"]) || empty($_POST["gender"])) {
+        $debugRetazec = "vsetky polia su povinne";
+    } else {
+        $email = htmlspecialchars($_POST["email"]);
+        $username = htmlspecialchars($_POST["username"]);
+        $password = htmlspecialchars($_POST["password"]);
+        $gender = htmlspecialchars($_POST["gender"]);
+        $role = isset($_POST["role"]) ? htmlspecialchars($_POST["role"]) : null;
+        $debugRetazec = "volas sa " . $username . " a tvoj email je " . $email;
     }
-    else 
-    {
-      $email = $_POST["email"];
-      $username = $_POST["username"];
-      $password = $_POST["password"];
-      $gender = $_POST["gender"];
-      $role = isset($_POST["role"]) ? ($_POST["role"] ): null;
-      $debugRetazec = "tvoje meno je " . $username;
-    }
-  }
+
 ?>
 
 <div class="container">
@@ -57,13 +50,14 @@ if (isset($_POST["submit"])) {
         <label class="radio"><input type="radio" name="role" value="developer"> Developer</label>
       </div>
 
-
-      <button type="submit">Register</button>
+      <button type="submit" name="submit">Register</button>
     </form>
   </div>
 
   <div class="image-container">
     <img src="image.jpeg" alt="Image">
   </div>
-  <h2>For Debug:<?php echo $debugRetazec?> </h2>
+  <h2>For Debug: <?php echo $debugRetazec; ?> </h2>
 </div>
+</body>
+</html>
